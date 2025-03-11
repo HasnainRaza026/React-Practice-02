@@ -11,3 +11,13 @@
 button {
   cursor: pointer;
 }
+
+.progress-bar::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: var(--progress-width);
+  max-width: 536px;
+  background-color: green;
+  border-radius: inherit;
+}

@@ -37,3 +37,9 @@ export function Body({ dispatch }) {
     </div>
   );
 }
+
+export function Ending({ score }) {
+  return (
+    <p className="font-bold text-[2.5rem]">You scored {score} out of 280</p>
+  );
+}
