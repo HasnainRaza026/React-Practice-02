@@ -1,4 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import { renderTime } from "./renderTime";
 
 export function Quiz({ children }) {
   return <div className="w-[536px] flex flex-col gap-10">{children}</div>;
@@ -100,7 +102,9 @@ function Option({
   );
 }
 
-export function Action({ optionSelectedBool, dispatch, secondsRemaining }) {
+export function Action({ optionSelectedBool, dispatch }) {
+  const [key, setKey] = useState(0);
+
   useEffect(() => {
     const id = setInterval(() => {
       dispatch({ type: "timeChange" });
@@ -111,12 +115,24 @@ export function Action({ optionSelectedBool, dispatch, secondsRemaining }) {
 
   return (
     <div className="flex justify-between items-center">
-      <div className="w-[90px] h-[90px] text-2xl font-light flex justify-center items-center rounded-full border-[5px]">
-        {secondsRemaining}
-      </div>
+      <CountdownCircleTimer
+        key={key}
+        size={90}
+        strokeWidth={5}
+        isPlaying
+        duration={15}
+        colors={["#2D7C36", "#8A942F", "#9A6F1F", "#802B2B"]}
+        colorsTime={[15, 10, 5, 0]}
+        onComplete={() => ({ shouldRepeat: true, delay: 0 })}
+      >
+        {renderTime}
+      </CountdownCircleTimer>
       {optionSelectedBool ? (
         <button
-          onClick={() => dispatch({ type: "nextQuestion" })}
+          onClick={() => {
+            dispatch({ type: "nextQuestion" });
+            setKey((prevKey) => prevKey + 1);
+          }}
           className="text-xl bg-[#3F474C] !px-[30px] !py-2.5 rounded-full hover:bg-[#2A2C2D] transition delay-150"
         >
           Next
