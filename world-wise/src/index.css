@@ -3,6 +3,7 @@
 
 :root {
   --bg-primary-color: #2d3439;
+  --bg-secondary-color: #42484d;
 }
 
 * {
@@ -19,4 +20,8 @@ body {
 .active {
   color: green;
   text-decoration: underline;
+}
+
+.tabActive {
+  background-color: #242a2e;
 }
