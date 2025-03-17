@@ -9,6 +9,8 @@ import Application from "./pages/Application";
 import Cities from "./components/Cities";
 import { useEffect, useState } from "react";
 import Countries from "./components/Countries";
+import CityDetail from "./components/CityDetail";
+import Form from "./components/Form";
 
 function App() {
   const [cities, setCities] = useState(null);
@@ -38,7 +40,9 @@ function App() {
         <Route path="app" element={<Application />}>
           <Route index element={<Navigate replace to="cities" />} />
           <Route path="cities" element={<Cities cities={cities} />} />
+          <Route path="cities/:id" element={<CityDetail cities={cities} />} />
           <Route path="countries" element={<Countries cities={cities} />} />
+          <Route path="form" element={<Form />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>

@@ -1,9 +1,10 @@
 import { NavLink, Outlet } from "react-router-dom";
+import Map from "../components/Map";
 
 function Application() {
   return (
-    <div className="w-full h-full">
-      <div className="w-[632px] h-full bg-[var(--bg-primary-color)] flex justify-center items-center">
+    <div className="w-full h-full flex">
+      <div className="w-[40%] h-full bg-[var(--bg-primary-color)] flex justify-center items-center">
         <div className="flex flex-col gap-[60px] items-center justify-center">
           <img
             src="./src/assets/logo.png"
@@ -37,6 +38,7 @@ function Application() {
           </div>
         </div>
       </div>
+      <Map />
     </div>
   );
 }
