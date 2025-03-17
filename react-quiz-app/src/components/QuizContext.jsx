@@ -1,4 +1,18 @@
-export function reducer(state, action) {
+import { useContext } from "react";
+import { useReducer } from "react";
+import { createContext } from "react";
+
+const initalState = {
+  status: "start", //start --> active --> end
+  quizData: [],
+  answered: 0,
+  optionSelectedBool: false,
+  optionSelected: null,
+  score: 0,
+  secondsRemaining: 15,
+};
+
+function reducer(state, action) {
   switch (action.type) {
     case "stateQuiz":
       return { ...state, status: "active" };
@@ -37,3 +51,47 @@ export function reducer(state, action) {
         : { ...state, secondsRemaining: state.secondsRemaining-- };
   }
 }
+
+const QuizContext = createContext();
+
+function QuizProvider({ children }) {
+  const [
+    {
+      status,
+      quizData,
+      answered,
+      optionSelectedBool,
+      optionSelected,
+      score,
+      secondsRemaining,
+    },
+    dispatch,
+  ] = useReducer(reducer, initalState);
+
+  return (
+    <QuizContext.Provider
+      value={{
+        status,
+        quizData,
+        answered,
+        optionSelectedBool,
+        optionSelected,
+        score,
+        secondsRemaining,
+        dispatch,
+      }}
+    >
+      {children}
+    </QuizContext.Provider>
+  );
+}
+
+function useQuiz() {
+  const context = useContext(QuizContext);
+  if (context === undefined)
+    throw new Error("Context is used outside of its scope");
+
+  return context;
+}
+
+export { QuizProvider, useQuiz };

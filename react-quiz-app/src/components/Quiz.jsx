@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { renderTime } from "./renderTime";
+import { useQuiz } from "./QuizContext";
 
 export function Quiz({ children }) {
   return <div className="w-[536px] flex flex-col gap-10">{children}</div>;
 }
 
-export function Progress({ answered, score }) {
+export function Progress() {
+  const { answered, score } = useQuiz();
   const progressWidth = (536 / 15) * (answered + 1);
 
   return (
@@ -23,36 +25,38 @@ export function Progress({ answered, score }) {
   );
 }
 
-export function Question({ question }) {
-  return <p className="text-2xl font-bold">{question}</p>;
+export function Question() {
+  const { quizData, answered } = useQuiz();
+  return <p className="text-2xl font-bold">{quizData[answered].question}</p>;
 }
 
-export function Options({
-  options,
-  points,
-  optionSelectedBool,
-  dispatch,
-  correctOption,
-  optionSelected,
-}) {
+export function Options() {
+  const { quizData, answered, optionSelectedBool, dispatch, optionSelected } =
+    useQuiz();
+
+  // const { options, points, correctOption } = ;
+
   let isCorrect;
   if (optionSelectedBool) {
-    isCorrect = correctOption === optionSelected ? "true" : "false";
+    isCorrect =
+      quizData[answered].correctOption === optionSelected ? "true" : "false";
   }
+
+  const options = quizData[answered].options;
 
   return (
     <div className="w-full flex flex-col items-end gap-[18px]">
       {options.map((item, i) => (
         <Option
           item={item}
-          points={points}
+          points={quizData[answered].points}
           dispatch={dispatch}
           key={i}
           optionIndex={i}
           optionSelectedBool={optionSelectedBool}
-          correctIndex={correctOption}
+          correctIndex={quizData[answered].correctOption}
           isCorrect={
-            optionSelectedBool && i === correctOption
+            optionSelectedBool && i === quizData[answered].correctOption
               ? "true"
               : i === optionSelected
               ? isCorrect
@@ -102,8 +106,9 @@ function Option({
   );
 }
 
-export function Action({ optionSelectedBool, dispatch }) {
+export function Action() {
   const [key, setKey] = useState(0);
+  const { optionSelectedBool, dispatch } = useQuiz();
 
   useEffect(() => {
     const id = setInterval(() => {

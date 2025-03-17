@@ -1,3 +1,5 @@
+import { useQuiz } from "./QuizContext";
+
 export function Introduction({ children }) {
   return (
     <div className="flex flex-col justify-center items-center gap-[50px]">
@@ -19,7 +21,9 @@ export function Heading() {
   );
 }
 
-export function Body({ dispatch }) {
+export function Body() {
+  const { dispatch } = useQuiz();
+
   return (
     <div className="flex flex-col items-center gap-[50px]">
       <div className="flex flex-col items-center gap-5">
@@ -38,7 +42,8 @@ export function Body({ dispatch }) {
   );
 }
 
-export function Ending({ score }) {
+export function Ending() {
+  const { score } = useQuiz();
   return (
     <p className="font-bold text-[2.5rem]">You scored {score} out of 280</p>
   );
