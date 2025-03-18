@@ -47,8 +47,8 @@ function Login() {
             text={"Back"}
             type={"button"}
             textColor="#ffffff"
-            bgColor="#000000"
-            bgHoverColor="#000000"
+            bgColor="rgba(0, 0, 0, .1)"
+            bgHoverColor="rgba(0, 0, 0, .2)"
             border="border"
             onClick={handleBack}
           />

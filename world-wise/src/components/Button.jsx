@@ -1,16 +1,22 @@
 function Button({
   text,
-  type = null,
+  type = "button",
   textColor = "text-black",
   bgColor = "#00C46A",
   bgHoverColor = "#00FF8A",
   border = "",
+  otherCSS = "",
   onClick = () => {},
 }) {
   return (
     <button
       type={type}
-      className={`${border} ${textColor} font-semibold !px-5 !py-2.5 bg-[${bgColor}] rounded-lg cursor-pointer hover:bg-[${bgHoverColor}] transition delay-200 ease-in-out w-max`}
+      className={`${border} ${textColor} font-semibold !px-5 !py-2.5 rounded-lg cursor-pointer transition delay-200 ease-in-out w-max ${otherCSS}`}
+      style={{
+        backgroundColor: bgColor,
+      }}
+      onMouseEnter={(e) => (e.target.style.backgroundColor = bgHoverColor)}
+      onMouseLeave={(e) => (e.target.style.backgroundColor = bgColor)}
       onClick={onClick}
     >
       {text}

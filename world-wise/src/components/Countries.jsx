@@ -1,4 +1,7 @@
-function Countries({ cities }) {
+import { useCities } from "../contexts/CitiesContext";
+
+function Countries() {
+  const { cities } = useCities();
   return (
     <div className="grid grid-cols-3 gap-7">
       {cities.map((city, i) => (
