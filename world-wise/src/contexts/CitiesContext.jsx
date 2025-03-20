@@ -9,7 +9,9 @@ function CitiesProvider({ children }) {
   useFetchCities(setCities);
 
   return (
-    <CitiesContext.Provider value={{ cities, currentCity, setCurrentCity }}>
+    <CitiesContext.Provider
+      value={{ cities, setCities, currentCity, setCurrentCity }}
+    >
       {children}
     </CitiesContext.Provider>
   );

@@ -2,23 +2,63 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputField from "./InputField";
 import Button from "./Button";
+import { useUrlPosition } from "../hooks/useUrlPosition";
+import useReverseGeocode from "../hooks/useReverseGeocode";
+import { addCity } from "../helpers/addCity";
+import { useCities } from "../contexts/CitiesContext";
 
 function Form() {
-  const [city, setCity] = useState("Karachi");
-  const [date, setDate] = useState("17/03/2025");
-  const [note, setNote] = useState("");
+  const [city, setCity] = useState("");
+  const [country, setCountry] = useState("");
+  const [emoji, setEmoji] = useState("");
+  const [date, setDate] = useState(() => {
+    const dateObj = new Date();
+    const formattedDate = `${(dateObj.getMonth() + 1) // Format to MM/DD/YYYY
+      .toString()
+      .padStart(2, "0")}/${dateObj
+      .getDate()
+      .toString()
+      .padStart(2, "0")}/${dateObj.getFullYear()}`;
+    return formattedDate;
+  });
 
+  const [note, setNote] = useState();
+  const [lat, lng] = useUrlPosition();
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+  useReverseGeocode(lat, lng, setCity, setCountry, setEmoji);
+
+  const { cities, setCities } = useCities();
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!city || !date) return;
+
+    const newCity = {
+      city: city.split(" ")[0], // fix: name not appearing // fix: reloading
+      country,
+      emoji,
+      date,
+      note,
+      position: { lat, lng },
+    };
+
+    await addCity(newCity, cities, setCities);
     navigate("/app");
-  };
+  }
 
   const handleBack = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
     navigate(-1);
   };
+
+  if (city === "") {
+    return (
+      <p className="text-xl font-bold">
+        City does not exit here, try clicking on the land!
+      </p>
+    );
+  }
 
   return (
     <form
@@ -36,7 +76,7 @@ function Form() {
           val={date}
           state={setDate}
           lable={"When did you go to Helechosa de los Montes?"}
-          type={"date"}
+          type={"text"}
         />
         <InputField
           val={note}

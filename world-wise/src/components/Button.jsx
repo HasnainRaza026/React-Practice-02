@@ -1,6 +1,6 @@
 function Button({
   text,
-  type = "button",
+  type,
   textColor = "text-black",
   bgColor = "#00C46A",
   bgHoverColor = "#00FF8A",

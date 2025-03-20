@@ -26,7 +26,7 @@ function App() {
             <Route path="cities" element={<Cities />} />
             <Route path="cities/:id" element={<CityDetail />} />
             <Route path="countries" element={<Countries />} />
-            <Route path=":position" element={<Form />} />
+            <Route path="form" element={<Form />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
