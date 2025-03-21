@@ -1,20 +1,31 @@
 import { Link } from "react-router-dom";
 import { dateFormat } from "../helpers/dateFormat";
 import { useCities } from "../contexts/CitiesContext";
+import { deleteCity } from "../helpers/deleteCity";
 
 function Cities() {
-  const { cities, currentCity } = useCities();
+  const { cities, currentCity, setCities } = useCities();
+
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    deleteCity(id, cities, setCities);
+  };
 
   return cities ? (
     <ul className="flex flex-col gap-4">
       {cities.map((city, i) => (
-        <CitiesList key={i} city={city} currentCity={currentCity} />
+        <CitiesList
+          key={i}
+          city={city}
+          currentCity={currentCity}
+          handleDelete={handleDelete}
+        />
       ))}
     </ul>
   ) : null;
 }
 
-function CitiesList({ city, currentCity }) {
+function CitiesList({ city, currentCity, handleDelete }) {
   const formattedDate = dateFormat(city.date);
 
   return (
@@ -29,7 +40,10 @@ function CitiesList({ city, currentCity }) {
         </div>
         <div className="flex gap-3.5 items-center">
           <p>{formattedDate}</p>
-          <button className="!px-[3px] !py-[3px] rounded-full bg-[#9E2323]">
+          <button
+            className="!px-[3px] !py-[3px] rounded-full bg-[#9E2323]"
+            onClick={(e) => handleDelete(e, city.id)}
+          >
             <img
               src="/src/assets/delete.png"
               alt="delete"

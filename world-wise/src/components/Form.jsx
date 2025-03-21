@@ -22,7 +22,7 @@ function Form() {
     return formattedDate;
   });
 
-  const [note, setNote] = useState();
+  const [note, setNote] = useState("");
   const [lat, lng] = useUrlPosition();
   const navigate = useNavigate();
 
@@ -35,16 +35,17 @@ function Form() {
     if (!city || !date) return;
 
     const newCity = {
-      city: city.split(" ")[0], // fix: name not appearing // fix: reloading
+      cityName: city.split(" ")[0], // fix: reloading
       country,
       emoji,
       date,
-      note,
+      notes: note,
       position: { lat, lng },
     };
 
+    console.log(newCity);
     await addCity(newCity, cities, setCities);
-    navigate("/app");
+    navigate("/app/cities");
   }
 
   const handleBack = (e) => {

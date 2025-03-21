@@ -1,22 +1,28 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import InputField from "../components/InputField";
 import Button from "../components/Button";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 function Login() {
-  const [email, setEmail] = useState("user@example.com");
-  const [password, setPassword] = useState("user@123321");
+  const [email, setEmail] = useState("hasnain@example.com");
+  const [password, setPassword] = useState("hasnain@123321");
+  const { login, isAuthenticated } = useAuth();
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
-    navigate("/app");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (email && password) login(email, password);
   };
 
+  useEffect(() => {
+    if (isAuthenticated) navigate("/app", { replace: true });
+  }, [isAuthenticated, navigate]);
+
   const handleBack = (e) => {
-    e.preventDefault(); // Prevent the default form submission behavior
+    e.preventDefault();
     navigate(-1);
   };
 

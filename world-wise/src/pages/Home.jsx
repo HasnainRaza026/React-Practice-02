@@ -6,7 +6,7 @@ import Paragraph from "../components/Paragraph";
 
 function Home() {
   return (
-    <div className="relative bg-[url('./src/assets/bg.jpg')] bg-cover bg-center h-full w-full flex justify-center items-center">
+    <div className="relative bg-[url('/src/assets/bg.jpg')] bg-cover bg-center h-full w-full flex justify-center items-center">
       <div class="absolute inset-0 bg-[#0C1810]/60"></div>
       <Header />
       <div class="relative z-10 w-[1122px] flex flex-col gap-[40px] items-center">
