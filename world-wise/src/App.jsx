@@ -19,11 +19,6 @@ const PageNotFound = lazy(() => import("./pages/PageNotFound"));
 const Login = lazy(() => import("./pages/Login"));
 const Application = lazy(() => import("./pages/Application"));
 
-// dist/index.html                   0.48 kB │ gzip:   0.31 kB
-// dist/assets/bg-CEKSzw8m.jpg     344.58 kB
-// dist/assets/index-DQk5T7Fr.css   25.76 kB │ gzip:   9.34 kB
-// dist/assets/index-BvIoiBh8.js   392.83 kB
-
 function App() {
   return (
     <CitiesProvider>
